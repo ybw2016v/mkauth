@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import requests as r
 from flask import Flask
 from flask_redis import FlaskRedis
@@ -11,14 +13,10 @@ app.config['REDIS_URL'] = "redis://127.0.0.1:6379/0"
 app.config['JSON_AS_ASCII'] = False
 rc = FlaskRedis(app, decode_responses=True)
 
-
 MURL="https://m.dogcraft.top/api/miauth/gen-token"
 
 parser = reqparse.RequestParser()
 parser.add_argument('i', type=str, help='token')
-
-from datetime import datetime
-
 
 def get_token(i):
     Name="MKauth {}".format(str(datetime.now()))
@@ -43,11 +41,7 @@ class Auth(Resource):
         else:
             return {"r":"OK","t":rdog}
 
-
-
-
 api.add_resource(Auth, '/')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
